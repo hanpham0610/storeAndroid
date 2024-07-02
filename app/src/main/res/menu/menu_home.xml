@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:title="Trang chủ"
+        android:icon="@drawable/ic_baseline_home_work_24"/>
+
+    <item
+        android:id="@+id/shorts"
+        android:title="Hóa đơn"
+        android:icon="@drawable/ic_baseline_list_alt_24"/>
+
+    <item
+        android:id="@+id/fab"
+        android:title=""
+        android:enabled="false"/>
+
+    <item
+        android:id="@+id/subscriptions"
+        android:title="Tra cứu"
+        android:icon="@drawable/ic_baseline_ssid_chart_24"/>
+
+    <item
+        android:id="@+id/library"
+        android:title="Thêm"
+        android:icon="@drawable/ic_baseline_apps_24"/>
+
+</menu>
