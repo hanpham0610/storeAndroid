@@ -44,7 +44,7 @@ public class FragmentHomeActivity extends Fragment {
         // Initialize Firebase Database
 
         db.copyDB2SDCard();
-        int sbg = db.GetCount( "SELECT * FROM sanpham" );
+        int sbg = db.GetCount( "SELECT * FROM qlySanPham" );
         Toast.makeText( getContext(), "số bản ghi:" + sbg, Toast.LENGTH_SHORT ).show();
         return view;
     }

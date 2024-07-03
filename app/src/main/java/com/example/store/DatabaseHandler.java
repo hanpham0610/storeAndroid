@@ -15,8 +15,8 @@ import java.io.OutputStream;
 public class DatabaseHandler extends SQLiteOpenHelper {
         private Context dbContext;
         private SQLiteDatabase db;
-        private static final String dbPath = "/data/data/com.example.store/databases/cuahang.sqlite";
-        private static final String dbName = "cuahang.sqlite";
+        private static final String dbPath = "/data/data/com.example.store/databases/store.sqlite";
+        private static final String dbName = "store.sqlite";
         private static final int dbVersion = 1;
 
         // Phương thức 1: Phương thức khởi dựng
