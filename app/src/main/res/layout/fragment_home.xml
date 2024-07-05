@@ -1,31 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".Fragment.FragmentHomeActivity">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Xin chào"
-        >
 
-    </TextView>
-    <GridView
-        android:id="@+id/listSanPhamManHinhChinh"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="3"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
-        android:padding="10dp">
+        android:orientation="vertical">
 
-    </GridView>
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <SearchView
+                android:id="@+id/idSearchProduct"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:iconifiedByDefault="false" />
+
+            <ImageButton
+                android:id="@+id/btnHoanDoi"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/white"
+
+                android:src="@drawable/baseline_list_alt_24" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listSanPhamManHinhChinh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            android:numColumns="3"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:padding="10dp">
+        </ListView>
+
+        <GridView
+            android:id="@+id/gridSanPhamManHinhChinh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:numColumns="3"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:padding="10dp">
+        </GridView>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,13 +2,13 @@ package com.example.store.Modal;
 
 
     public class Product {
-        private  String productId;
-        private String tenMatHang;
-        private String giaBan;
-        private String soLuong;
-        private String donViTinh;
-        private String imgProduct; // Thêm trường này để lưu URL ảnh
-        private String ghiChu;
+        public   String productId;
+        public String tenMatHang;
+        public String giaBan;
+        public String soLuong;
+        public String donViTinh;
+        public String imgProduct; // Thêm trường này để lưu URL ảnh
+        public String ghiChu;
 
         public Product() {
             // Default constructor required for calls to DataSnapshot.getValue(Product.class)

@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 
-import com.example.store.Adapter.SanPhamAdapter;
+import com.example.store.Adapter.SanPham.SanPhamAdapter;
 import com.example.store.Modal.SanPham;
 
 import org.json.JSONArray;

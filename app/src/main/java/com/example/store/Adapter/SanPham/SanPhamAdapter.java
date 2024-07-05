@@ -1,4 +1,4 @@
-package com.example.store.Adapter;
+package com.example.store.Adapter.SanPham;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.example.store.Fragment.FragmentHomeActivity;
 import com.example.store.Modal.Product;
 import com.example.store.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,8 @@ public class SanPhamAdapter extends ArrayAdapter<Product> {
         this.context = context;
         this.items = items;
     }
+
+
 
     public void setItems(ArrayList<Product> items) {
         this.items = items;
@@ -47,7 +51,10 @@ public class SanPhamAdapter extends ArrayAdapter<Product> {
 
             textViewSrc.setText(item.getTenMatHang());
             textViewCaption.setText(item.getGiaBan());
-
+            System.out.println("item img"+ item.getImgProduct());
+            if(item.getImgProduct().startsWith("https://")){
+                Picasso.get().load(item.getImgProduct()).into(imageView);
+            }else
             // Chuyển đổi chuỗi Base64 thành bitmap
             if (item.getImgProduct() != null && !item.getImgProduct().isEmpty()) {
                 Bitmap bitmap = decodeBase64(item.getImgProduct());
