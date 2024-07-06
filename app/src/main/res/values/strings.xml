@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Store</string>
+
+    <string-array name="spinner_items">
+        <item>Tất cả sản phẩm </item>
+        <item>Cái</item>
+        <item>Kg</item>
+        <item>M</item>
+        <item>Thùng</item>
+        <item>Lọ</item>
+
+    </string-array>
 </resources>
+

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.store.Modal.Product;
 import com.example.store.R;
+import com.example.store.VMCrop;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class SanPhamListAdapter extends ArrayAdapter<Product> {
 
             textViewSrc.setText(item.getTenMatHang());
             textViewCaption.setText("Số lượng : "+ item.getSoLuong()+ " "+ item.getDonViTinh());
-            textViewSl.setText("Giá bán: "+ item.getGiaBan() + " đ");
+            textViewSl.setText("Giá bán: "+ VMCrop.setFormatMoney(Integer.parseInt(item.getGiaBan())));
             System.out.println("item img"+ item.getImgProduct());
             if(item.getImgProduct().startsWith("https://")){
                 Picasso.get().load(item.getImgProduct()).into(imageView);

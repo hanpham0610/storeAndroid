@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.store.Fragment.FragmentHomeActivity;
 import com.example.store.Modal.Product;
 import com.example.store.R;
+import com.example.store.VMCrop;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class SanPhamAdapter extends ArrayAdapter<Product> {
             TextView textViewCaption = view.findViewById(R.id.tvGiaSp);
 
             textViewSrc.setText(item.getTenMatHang());
-            textViewCaption.setText(item.getGiaBan());
+            textViewCaption.setText(VMCrop.setFormatMoney(Integer.parseInt(item.getGiaBan())));
             System.out.println("item img"+ item.getImgProduct());
             if(item.getImgProduct().startsWith("https://")){
                 Picasso.get().load(item.getImgProduct()).into(imageView);

@@ -21,7 +21,47 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:queryHint="Tìm kiếm sản phẩm..."
                 android:iconifiedByDefault="false" />
+            <FrameLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+
+                <ImageButton
+                    android:id="@+id/btnCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:src="@drawable/baseline_shopping_cart_24" />
+
+                <TextView
+                    android:id="@+id/cartItemCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle_background_red"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="4dp"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="15px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:queryHint="Tìm kiếm sản phẩm..."
+                android:layout_weight="1" />
 
             <ImageButton
                 android:id="@+id/btnHoanDoi"
