@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBarGioHang"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="#FFFFFF"
+        app:title="Giỏ hàng của tôi"
+        app:titleTextColor="#000000">
+
+        <TextView
+            android:id="@+id/numberCart"
+            android:layout_width="40dp"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:text="(2)"
+            >
+
+        </TextView>
+    </androidx.appcompat.widget.Toolbar>
+
+    <ListView
+        android:id="@+id/lvGioHang"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/line1"
+        android:layout_below="@id/toolBarGioHang" />
+
+
+    -
+
+    <LinearLayout
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/line3"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:layout_width="101dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Tổng Tiền:"
+            android:textColor="#000000"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:id="@+id/txtTongTien"
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textStyle="bold"></TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/line3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/line1">
+
+
+
+        <Button
+            android:id="@+id/btnDatHang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Đặt Hàng"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#00BCD4" />
+
+    </LinearLayout>
+
+</RelativeLayout>

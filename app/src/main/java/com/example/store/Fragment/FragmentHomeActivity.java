@@ -1,16 +1,18 @@
 package com.example.store.Fragment;
 
-import static com.example.store.ListDBSQL.getSanPham;
+import static com.example.store.VMCrop.KeyMeta;
+import static com.example.store.VMCrop.getSanPham;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -24,11 +26,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.store.Adapter.SanPham.SanPhamAdapter;
 import com.example.store.Adapter.SanPham.SanPhamListAdapter;
+import com.example.store.Controller.GioHang.CardController;
 import com.example.store.DatabaseHandler;
 import com.example.store.Modal.Product;
 import com.example.store.R;
-import com.google.gson.Gson;
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
@@ -39,12 +40,12 @@ public class FragmentHomeActivity extends Fragment {
     private ArrayList<Product> sanPhamList;
     private GridView gridView;
     private ListView listView;
-    private DatabaseReference mDatabase;
-    DatabaseHandler db;
+    private DatabaseHandler db;
     private boolean isListIcon = true;
     private ImageButton btnHoanDoi, btnCard;
     private TextView cartItemCount;
     private SearchView searchView;
+    private Button btnCart;
 
     @Nullable
     @Override
@@ -57,13 +58,18 @@ public class FragmentHomeActivity extends Fragment {
         btnCard = view.findViewById(R.id.btnCard);
         cartItemCount = view.findViewById(R.id.cartItemCount);
         searchView = view.findViewById(R.id.idSearchProduct);
+        btnCard = view.findViewById(R.id.btnCard);
 
         sanPhamList = new ArrayList<>();
-        gridView.setAdapter(sanPhamAdapter);
         db = new DatabaseHandler(requireActivity());
         db.copyDB2SDCard();
+
+        int sbg = db.GetCount("select * from qly_sanpham");
+         Toast.makeText( getActivity(), "số bản ghi:" + sbg, Toast.LENGTH_SHORT ).show();
         setBtnHoanDoi();
         db2ListViewSanPham();
+        setCard();
+        updateCartItemCount();
 
         // Đặt on item click listeners cho gridView và listView
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,6 +89,18 @@ public class FragmentHomeActivity extends Fragment {
         });
 
         return view;
+    }
+
+    private void setCard() {
+        btnCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CardController.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     private void setBtnHoanDoi() {
@@ -106,7 +124,7 @@ public class FragmentHomeActivity extends Fragment {
     }
 
     public void db2GridViewSanPham() {
-        sanPhamList = new ArrayList<Product>();
+        sanPhamList = new ArrayList<>();
         Product row;
         Cursor cursor = db.getCursor(getSanPham);
         cursor.moveToFirst();
@@ -129,7 +147,7 @@ public class FragmentHomeActivity extends Fragment {
     }
 
     public void db2ListViewSanPham() {
-        sanPhamList = new ArrayList<Product>();
+        sanPhamList = new ArrayList<>();
         Product row;
         Cursor cursor = db.getCursor(getSanPham);
         cursor.moveToFirst();
@@ -152,33 +170,41 @@ public class FragmentHomeActivity extends Fragment {
     }
 
     private void addToLocalStore(Product product) {
-        // Chuyển đổi đối tượng Product thành chuỗi JSON
-        Gson gson = new Gson();
-        String jsonProduct = gson.toJson(product);
-
-        // Lưu trữ chuỗi JSON trong SharedPreferences
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("localStore", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("product_" + product.productId, jsonProduct);
-        editor.apply();
-
+        // Lưu sản phẩm vào bảng qly_card trong SQLite
+        db.addProductToCart(product);
+        db2ListViewSanPham();
+//        db2GridViewSanPham();
         // Cập nhật số lượng sản phẩm trong giỏ hàng
-        updateCartItemCount();
 
-        // Hiển thị thông báo sản phẩm đã được thêm vào
-        Toast.makeText(getContext(), "Đã thêm " + product.tenMatHang + " vào kho lưu trữ cục bộ", Toast.LENGTH_SHORT).show();
+
+        // Hiển thị thông báo
+        Toast.makeText(getContext(), "Đã thêm " + product.tenMatHang + " vào giỏ hàng", Toast.LENGTH_SHORT).show();
     }
 
     private void updateCartItemCount() {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("localStore", Context.MODE_PRIVATE);
-        // Lấy tất cả các sản phẩm đã lưu
-        int itemCount = sharedPreferences.getAll().size();
-
-        if (itemCount > 0) {
+        int sbg = db.GetCount("SELECT * FROM qly_card");
+//        Toast.makeText( this, "số bản ghi:" + sbg, Toast.LENGTH_SHORT ).show();
+        System.out.println("sbg " + sbg);
+        System.out.println("sbg " + sbg);
+        System.out.println("sbg " + sbg);
+        if (sbg > 0) {
             cartItemCount.setVisibility(View.VISIBLE);
-            cartItemCount.setText(String.valueOf(itemCount));
+            cartItemCount.setText(String.valueOf(sbg));
         } else {
             cartItemCount.setVisibility(View.GONE);
         }
+        cartItemCount.setText(String.valueOf(sbg));
+//        SQLiteDatabase database = db.getReadableDatabase();
+//        Cursor cursor = database.rawQuery("SELECT SUM(soLuong) FROM qly_card", null);
+//        if (cursor.moveToFirst()) {
+//            int itemCount = cursor.getInt(0);
+//            if (itemCount > 0) {
+//                cartItemCount.setVisibility(View.VISIBLE);
+//                cartItemCount.setText(String.valueOf(itemCount));
+//            } else {
+//                cartItemCount.setVisibility(View.GONE);
+//            }
+//        }
+//        cursor.close();
     }
 }

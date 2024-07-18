@@ -8,9 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.store.Controller.CreateProductController;
+import com.example.store.Controller.SanPham.CreateProductController;
 import com.example.store.databinding.ActivityMainBinding;
 
 import com.example.store.Fragment.FragmentHomeActivity;

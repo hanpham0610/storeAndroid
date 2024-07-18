@@ -1,4 +1,6 @@
-package com.example.store.Controller;
+package com.example.store.Controller.SanPham;
+
+import static com.example.store.VMCrop.keySanPham;
 
 import android.Manifest;
 import android.content.Intent;
@@ -22,9 +24,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
+import com.example.store.DatabaseHandler;
+import com.example.store.MainActivity;
 import com.example.store.R;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -40,6 +43,7 @@ public class CreateProductController extends AppCompatActivity {
     private CheckBox chkApDungThue;
     private Button btnLuu;
     private DatabaseReference mDatabase;
+    DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,7 @@ public class CreateProductController extends AppCompatActivity {
         // Initialize Firebase Database
 //        mDatabase = FirebaseDatabase.getInstance().getReference("products");
 
+        db = new DatabaseHandler(this);
         imageView = findViewById(R.id.imageView);
         edtTenMatHang = findViewById(R.id.edtTenMatHang);
         edtMaVach = findViewById(R.id.edtMaVach);
@@ -72,7 +77,7 @@ public class CreateProductController extends AppCompatActivity {
                 if (imageUri != null) {
                     convertImageToBase64AndSave();
                 } else {
-                    saveProductToFirebase(null);
+                    addSanPham(null);
                 }
             }
         });
@@ -105,7 +110,40 @@ public class CreateProductController extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
-        saveProductToFirebase(base64Image);
+        addSanPham(base64Image);
+    }
+
+    public void addSanPham(String base64Image) {
+        String idProduct = generateRandomId(5);
+        String tenMatHang = edtTenMatHang.getText().toString().trim();
+        String maVach = edtMaVach.getText().toString().trim();
+        String giaBan = edtGiaBan.getText().toString().trim();
+        String soLuong = edtSoLuong.getText().toString().trim();
+        String donViTinh = edtDonViTinh.getText().toString().trim();
+        String ghiChu = "";
+        if (idProduct.length() == 0) {
+            Toast.makeText(CreateProductController.this, "Nhập dữ liệu", Toast.LENGTH_SHORT).show();
+        } else {
+
+            if (tenMatHang.length() == 0) {
+                Toast.makeText(CreateProductController.this, "Nhập dữ liệu", Toast.LENGTH_SHORT).show();
+            } else if (donViTinh.length() == 0) {
+                Toast.makeText(CreateProductController.this, "Nhập dữ liệu", Toast.LENGTH_SHORT).show();
+            } else if (soLuong.length() == 0) {
+                Toast.makeText(CreateProductController.this, "Nhập dữ liệu", Toast.LENGTH_SHORT).show();
+
+            } else if (giaBan.length() == 0) {
+                Toast.makeText(CreateProductController.this, "Nhập dữ liệu", Toast.LENGTH_SHORT).show();
+
+            } else {
+                // Thêm dữ liệu vào database
+                db.executeSQL("insert into " + keySanPham + " values('" + idProduct + "','" + tenMatHang + "','" + giaBan + "','" + soLuong + "','" + donViTinh + "','" + base64Image + "','" + ghiChu + "')");
+                Toast.makeText(getApplicationContext(), "Thêm thành công!!!", Toast.LENGTH_LONG).show();
+                Intent back = new Intent(CreateProductController.this, MainActivity.class);
+                startActivity(back);
+                finish();
+            }
+        }
     }
 
     private void saveProductToFirebase(String base64Image) {

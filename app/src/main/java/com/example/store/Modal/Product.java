@@ -10,6 +10,16 @@ package com.example.store.Modal;
         public String imgProduct; // Thêm trường này để lưu URL ảnh
         public String ghiChu;
 
+        public String soLuongHienTai;
+
+        public String getSoLuongHienTai() {
+            return soLuongHienTai;
+        }
+
+        public void setSoLuongHienTai(String soLuongHienTai) {
+            this.soLuongHienTai = soLuongHienTai;
+        }
+
         public Product() {
             // Default constructor required for calls to DataSnapshot.getValue(Product.class)
         }
