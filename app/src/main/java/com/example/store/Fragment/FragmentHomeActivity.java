@@ -185,8 +185,7 @@ public class FragmentHomeActivity extends Fragment {
         int sbg = db.GetCount("SELECT * FROM qly_card");
 //        Toast.makeText( this, "số bản ghi:" + sbg, Toast.LENGTH_SHORT ).show();
         System.out.println("sbg " + sbg);
-        System.out.println("sbg " + sbg);
-        System.out.println("sbg " + sbg);
+
         if (sbg > 0) {
             cartItemCount.setVisibility(View.VISIBLE);
             cartItemCount.setText(String.valueOf(sbg));

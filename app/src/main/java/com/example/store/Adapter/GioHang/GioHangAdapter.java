@@ -56,7 +56,14 @@ public class GioHangAdapter extends ArrayAdapter<Product> {
 
             textViewSrc.setText(item.getTenMatHang());
             textViewCaption.setText(VMCrop.setFormatMoney(Integer.parseInt(item.getGiaBan())));
-            textViewSl.setText(item.getSoLuongHienTai());
+            // Chuyển đổi soLuong và soLuongHienTai thành số nguyên
+            int soLuongGoc = Integer.parseInt(item.getSoLuong());
+            int soLuongHienTai = Integer.parseInt(item.getSoLuongHienTai());
+            int sluong = soLuongGoc - soLuongHienTai;
+
+            if (textViewSl != null) {
+                textViewSl.setText(String.valueOf(sluong));
+            }
 
             if (item.getImgProduct().startsWith("https://")) {
                 Picasso.get().load(item.getImgProduct()).into(imageView);
