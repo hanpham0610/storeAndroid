@@ -28,6 +28,8 @@ import com.example.store.DatabaseHandler;
 import com.example.store.MainActivity;
 import com.example.store.R;
 import com.google.firebase.database.DatabaseReference;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -86,28 +88,64 @@ public class CreateProductController extends AppCompatActivity {
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
+        // Inside onCreate method
+        Button btnQuetMaVach = findViewById(R.id.btnQuetMaVach);
+        btnQuetMaVach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scanBarcode();
+            }
+        });
+
     }
 
+
+    // Method to start barcode scanning
+    private void scanBarcode() {
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setPrompt("Quét mã vạch");
+        integrator.setOrientationLocked(false);
+        integrator.setBeepEnabled(true);
+        integrator.initiateScan();
+    }
+
+    // Handle the scanned result
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(this, "Quét mã thất bại", Toast.LENGTH_SHORT).show();
+            } else {
+                // Set the scanned barcode in the EditText
+                edtMaVach.setText(result.getContents());
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
     private void openImageChooser() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();
-            imageView.setImageURI(imageUri);
-        }
-    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+//            imageUri = data.getData();
+//            imageView.setImageURI(imageUri);
+//        }
+//    }
 
     private void convertImageToBase64AndSave() {
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
         addSanPham(base64Image);
@@ -137,7 +175,7 @@ public class CreateProductController extends AppCompatActivity {
 
             } else {
                 // Thêm dữ liệu vào database
-                db.executeSQL("insert into " + keySanPham + " values('" + idProduct + "','" + tenMatHang + "','" + giaBan + "','" + soLuong + "','" + donViTinh + "','" + base64Image + "','" + ghiChu + "')");
+                db.executeSQL("insert into " + keySanPham + " (productId, tenMatHang, giaBan, soLuong, donViTinh, imgProduct, ghiChu) values('" + idProduct + "','" + tenMatHang + "','" + giaBan + "','" + soLuong + "','" + donViTinh + "','" + base64Image + "','" + ghiChu + "')");
                 Toast.makeText(getApplicationContext(), "Thêm thành công!!!", Toast.LENGTH_LONG).show();
                 Intent back = new Intent(CreateProductController.this, MainActivity.class);
                 startActivity(back);

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -24,11 +23,25 @@
         android:layout_height="wrap_content"
         android:hint="Tên mặt hàng" />
 
-    <EditText
-        android:id="@+id/edtMaVach"
+    <!-- Barcode input with scan button -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Mã vạch" />
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edtMaVach"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Mã vạch" />
+
+        <Button
+            android:id="@+id/btnQuetMaVach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quét mã" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/edtGiaBan"
@@ -59,5 +72,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lưu" />
-
 </LinearLayout>
