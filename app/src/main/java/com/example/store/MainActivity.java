@@ -8,8 +8,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.example.store.Controller.SanPham.CreateProductController;
+import com.example.store.Fragment.FragmentAccountActivity;
 import com.example.store.databinding.ActivityMainBinding;
 
 import com.example.store.Fragment.FragmentHomeActivity;
@@ -25,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new FragmentHomeActivity());
+//        View redLine = findViewById(R.id.redLine);
+//        Animation animation = AnimationUtils.loadAnimation(this, R.anim.scanner_line_move);
+//        redLine.startAnimation(animation);
         floatingActionButtonCreate = findViewById(R.id.createProduct);
         floatingActionButtonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new FragmentHomeActivity());
                     break;
                 case R.id.library:
-                    replaceFragment(new FragmentHomeActivity());
+                    replaceFragment(new FragmentAccountActivity());
                     break;
             }
+
             return true;
         });
     }

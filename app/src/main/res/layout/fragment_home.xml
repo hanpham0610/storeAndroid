@@ -1,4 +1,5 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -45,12 +46,12 @@
                     android:textSize="12sp"
                     android:visibility="gone"
                     android:layout_gravity="top|end"
-                    android:layout_margin="4dp"/>
+                    android:layout_margin="4dp" />
             </FrameLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="15px"
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -60,7 +61,6 @@
                 android:id="@+id/spinner"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:queryHint="Tìm kiếm sản phẩm..."
                 android:layout_weight="1" />
 
             <ImageButton
@@ -68,7 +68,6 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@color/white"
-
                 android:src="@drawable/baseline_list_alt_24" />
         </LinearLayout>
 
@@ -77,10 +76,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"
-            android:numColumns="3"
+            android:padding="10dp"
             android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
-            android:padding="10dp">
+            android:horizontalSpacing="10dp">
         </ListView>
 
         <GridView

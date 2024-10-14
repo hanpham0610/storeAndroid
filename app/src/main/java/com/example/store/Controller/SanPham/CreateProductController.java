@@ -104,7 +104,7 @@ public class CreateProductController extends AppCompatActivity {
     private void scanBarcode() {
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setPrompt("Quét mã vạch");
-        integrator.setOrientationLocked(false);
+        integrator.setOrientationLocked(true);  // Khóa chế độ dọc
         integrator.setBeepEnabled(true);
         integrator.initiateScan();
     }
