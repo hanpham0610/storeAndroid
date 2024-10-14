@@ -39,9 +39,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
-        android:src="@drawable/ic_baseline_add_24"
+        android:src="@drawable/scan"
         app:layout_anchor="@id/bottomAppBar"
         app:maxImageSize="40dp"
-        app:tint ="@color/teal_200"/>
+        app:tint ="@color/teal_700" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

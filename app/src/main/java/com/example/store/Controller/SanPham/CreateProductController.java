@@ -23,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-
 import com.example.store.DatabaseHandler;
 import com.example.store.MainActivity;
 import com.example.store.R;
@@ -52,10 +51,9 @@ public class CreateProductController extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_product_controller);
 
-        // Initialize Firebase Database
-//        mDatabase = FirebaseDatabase.getInstance().getReference("products");
-
+        // Initialize SQLite Database handler
         db = new DatabaseHandler(this);
+
         imageView = findViewById(R.id.imageView);
         edtTenMatHang = findViewById(R.id.edtTenMatHang);
         edtMaVach = findViewById(R.id.edtMaVach);
@@ -65,93 +63,89 @@ public class CreateProductController extends AppCompatActivity {
         chkApDungThue = findViewById(R.id.chkApDungThue);
         btnLuu = findViewById(R.id.btnLuu);
 
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        // Open image chooser
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openImageChooser();
             }
         });
 
+        // Save product
         btnLuu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (imageUri != null) {
                     convertImageToBase64AndSave();
                 } else {
-                    addSanPham(null);
+                    addSanPham(null); // No image
                 }
             }
         });
 
+        // Request storage permission if needed
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
-        // Inside onCreate method
-        Button btnQuetMaVach = findViewById(R.id.btnQuetMaVach);
-        btnQuetMaVach.setOnClickListener(new View.OnClickListener() {
+
+        // Barcode scanner button
+        findViewById(R.id.btnQuetMaVach).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 scanBarcode();
             }
         });
-
     }
-
 
     // Method to start barcode scanning
     private void scanBarcode() {
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setPrompt("Quét mã vạch");
-        integrator.setOrientationLocked(false);
+        integrator.setOrientationLocked(true);
         integrator.setBeepEnabled(true);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+        integrator.setCaptureActivity(CustomScannerActivity.class); // Custom scanner activity
         integrator.initiateScan();
     }
 
-    // Handle the scanned result
+    // Method to handle both barcode scanning and image picking results
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            if (result.getContents() == null) {
-                Toast.makeText(this, "Quét mã thất bại", Toast.LENGTH_SHORT).show();
-            } else {
-                // Set the scanned barcode in the EditText
-                edtMaVach.setText(result.getContents());
-            }
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            imageView.setImageURI(imageUri);
         } else {
-            super.onActivityResult(requestCode, resultCode, data);
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            if (result != null && result.getContents() != null) {
+                edtMaVach.setText(result.getContents()); // Set scanned barcode
+            } else {
+                Toast.makeText(this, "Quét mã thất bại", Toast.LENGTH_SHORT).show();
+            }
         }
     }
+
+    // Open image chooser
     private void openImageChooser() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-//            imageUri = data.getData();
-//            imageView.setImageURI(imageUri);
-//        }
-//    }
 
+    // Convert image to Base64
     private void convertImageToBase64AndSave() {
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
-        addSanPham(base64Image);
+        addSanPham(base64Image); // Save product with image
     }
 
-    public void addSanPham(String base64Image) {
+    // Add product to SQLite
+    public void addSanPham(@Nullable String base64Image) {
         String idProduct = generateRandomId(5);
         String tenMatHang = edtTenMatHang.getText().toString().trim();
         String maVach = edtMaVach.getText().toString().trim();
@@ -159,59 +153,23 @@ public class CreateProductController extends AppCompatActivity {
         String soLuong = edtSoLuong.getText().toString().trim();
         String donViTinh = edtDonViTinh.getText().toString().trim();
         String ghiChu = "";
-        if (idProduct.length() == 0) {
-            Toast.makeText(CreateProductController.this, "Nhập dữ liệu", Toast.LENGTH_SHORT).show();
-        } else {
 
-            if (tenMatHang.length() == 0) {
-                Toast.makeText(CreateProductController.this, "Nhập dữ liệu", Toast.LENGTH_SHORT).show();
-            } else if (donViTinh.length() == 0) {
-                Toast.makeText(CreateProductController.this, "Nhập dữ liệu", Toast.LENGTH_SHORT).show();
-            } else if (soLuong.length() == 0) {
-                Toast.makeText(CreateProductController.this, "Nhập dữ liệu", Toast.LENGTH_SHORT).show();
-
-            } else if (giaBan.length() == 0) {
-                Toast.makeText(CreateProductController.this, "Nhập dữ liệu", Toast.LENGTH_SHORT).show();
-
-            } else {
-                // Thêm dữ liệu vào database
-                db.executeSQL("insert into " + keySanPham + " (productId, tenMatHang, giaBan, soLuong, donViTinh, imgProduct, ghiChu) values('" + idProduct + "','" + tenMatHang + "','" + giaBan + "','" + soLuong + "','" + donViTinh + "','" + base64Image + "','" + ghiChu + "')");
-                Toast.makeText(getApplicationContext(), "Thêm thành công!!!", Toast.LENGTH_LONG).show();
-                Intent back = new Intent(CreateProductController.this, MainActivity.class);
-                startActivity(back);
-                finish();
-            }
+        // Validation
+        if (tenMatHang.isEmpty() || giaBan.isEmpty() || soLuong.isEmpty() || donViTinh.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        // Insert product data into SQLite
+        db.executeSQL("insert into " + keySanPham + " (productId, tenMatHang, giaBan, soLuong, donViTinh, imgProduct, ghiChu) values('"
+                + idProduct + "','" + tenMatHang + "','" + giaBan + "','" + soLuong + "','" + donViTinh + "','" + base64Image + "','" + ghiChu + "')");
+        Toast.makeText(getApplicationContext(), "Thêm thành công!!!", Toast.LENGTH_LONG).show();
+        Intent back = new Intent(CreateProductController.this, MainActivity.class);
+        startActivity(back);
+        finish();
     }
 
-    private void saveProductToFirebase(String base64Image) {
-        String idProduct = generateRandomId(5);
-        String tenMatHang = edtTenMatHang.getText().toString().trim();
-        String maVach = edtMaVach.getText().toString().trim();
-        String giaBan = edtGiaBan.getText().toString().trim();
-        String soLuong = edtSoLuong.getText().toString().trim();
-        String donViTinh = edtDonViTinh.getText().toString().trim();
-        boolean apDungThue = chkApDungThue.isChecked();
-
-        Map<String, Object> product = new HashMap<>();
-        product.put("idProduct", idProduct);
-        product.put("tenMatHang", tenMatHang);
-        product.put("maVach", maVach);
-        product.put("giaBan", giaBan);
-        product.put("soLuong", soLuong);
-        product.put("donViTinh", donViTinh);
-        product.put("apDungThue", apDungThue);
-        product.put("imgProduct", base64Image);
-
-        mDatabase.child(idProduct).setValue(product)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(CreateProductController.this, "Lưu sản phẩm thành công!", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(CreateProductController.this, "Lưu sản phẩm thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-    }
-
+    // Generate random product ID
     private String generateRandomId(int length) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
@@ -226,10 +184,7 @@ public class CreateProductController extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted
-            } else {
-                // Permission denied
+            if (!(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 Toast.makeText(this, "Permission denied!", Toast.LENGTH_SHORT).show();
             }
         }

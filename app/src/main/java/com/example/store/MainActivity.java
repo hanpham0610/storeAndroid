@@ -7,7 +7,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.example.store.Controller.SanPham.CreateProductController;
 import com.example.store.databinding.ActivityMainBinding;
@@ -26,6 +29,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         replaceFragment(new FragmentHomeActivity());
         floatingActionButtonCreate = findViewById(R.id.createProduct);
+        final Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.scan_img);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+
+
+
         floatingActionButtonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
