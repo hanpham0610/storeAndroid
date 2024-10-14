@@ -7,64 +7,71 @@
     android:background="@color/white"
     android:orientation="horizontal">
 
-    <ImageView
-
-        android:id="@+id/imgProduct"
-
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:scaleType="centerCrop"
-        tools:ignore="MissingConstraints" />
-
     <LinearLayout
-        android:layout_width="310dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintStart_toEndOf="@+id/imgProduct"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="0dp">
 
+        android:padding="5px"
+        app:layout_constraintCircleRadius="10px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <ImageView
 
-        <TextView
-            android:id="@+id/tvTenSp"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:ems="10"
-            android:text="textview"
-            android:textColor="#009688"
-            android:textSize="13dp"
-            android:textStyle="bold" />
+            android:id="@+id/imgProduct"
+
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="centerCrop"
+            tools:ignore="MissingConstraints" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"> <!-- Đặt orientation là horizontal -->
+            android:layout_width="310dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/imgProduct"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="0dp">
+
 
             <TextView
-                android:id="@+id/tvSoLuong"
-                android:layout_width="0dp"
+                android:id="@+id/tvTenSp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="15dp"
                 android:ems="10"
-                android:text="textview" />
+                android:text="textview"
+                android:textColor="#009688"
+                android:textSize="13dp"
+                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvGiaSp"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="5dp"
-                android:ems="10"
-                android:text="textview" />
+                android:orientation="horizontal"> <!-- Đặt orientation là horizontal -->
+
+                <TextView
+                    android:id="@+id/tvSoLuong"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:text="textview" />
+
+                <TextView
+                    android:id="@+id/tvGiaSp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:text="textview" />
 
 
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
