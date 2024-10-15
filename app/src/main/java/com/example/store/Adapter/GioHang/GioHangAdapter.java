@@ -59,10 +59,12 @@ public class GioHangAdapter extends ArrayAdapter<Product> {
             // Chuyển đổi soLuong và soLuongHienTai thành số nguyên
             int soLuongGoc = Integer.parseInt(item.getSoLuong());
             int soLuongHienTai = Integer.parseInt(item.getSoLuongHienTai());
+            System.out.println(" soLuongGoc "+ soLuongGoc + " soLuongHienTai " + soLuongHienTai);
+
             int sluong = soLuongGoc - soLuongHienTai;
 
             if (textViewSl != null) {
-                textViewSl.setText(String.valueOf(sluong));
+                textViewSl.setText(String.valueOf(soLuongGoc));
             }
 
             if (item.getImgProduct().startsWith("https://")) {
@@ -78,10 +80,11 @@ public class GioHangAdapter extends ArrayAdapter<Product> {
             btnTru.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int soLuong = Integer.parseInt(item.getSoLuongHienTai());
+                    int soLuong = Integer.parseInt(item.getSoLuong());
+                    int soLuongHienTai = Integer.parseInt(item.getSoLuongHienTai());
                     if (soLuong > 1) {
                         soLuong--;
-                        item.setSoLuongHienTai(String.valueOf(soLuong));
+                        item.setSoLuongHienTai(String.valueOf( soLuongHienTai + 1));
                         textViewSl.setText(String.valueOf(soLuong));
                         // Cập nhật giỏ hàng trong cơ sở dữ liệu
                         updateCartItem(item);
@@ -93,9 +96,10 @@ public class GioHangAdapter extends ArrayAdapter<Product> {
             btnCong.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int soLuong = Integer.parseInt(item.getSoLuongHienTai());
+                    int soLuong = Integer.parseInt(item.getSoLuong());
+                    int soLuongHienTai = Integer.parseInt(item.getSoLuongHienTai());
                     soLuong++;
-                    item.setSoLuongHienTai(String.valueOf(soLuong));
+                    item.setSoLuongHienTai(String.valueOf(soLuongHienTai - 1));
                     textViewSl.setText(String.valueOf(soLuong));
                     // Cập nhật giỏ hàng trong cơ sở dữ liệu
                     updateCartItem(item);

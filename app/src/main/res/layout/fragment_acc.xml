@@ -1,43 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tracuu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TracuuFragment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="wrap_content"
-    tools:ignore="MissingConstraints">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBarGioHang"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="#36A8B6"
+        app:title="Thông tin"
+        app:titleTextColor="#FFFFFF"
+        tools:ignore="MissingConstraints">
+
+    </androidx.appcompat.widget.Toolbar>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
-       <ImageView
-           android:src="@drawable/baseline_account_circle_24"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content">
+        android:layout_below="@id/toolBarGioHang"
+        android:orientation="vertical">
 
-       </ImageView>
-        <TextView
+        <LinearLayout
+            android:id="@+id/btnTaiKhoan"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Tài khoản"></TextView>
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:src="@drawable/baseline_account_circle_24">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity=""
+                android:text="Tài khoản"></TextView>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#807A7A"/>
+
+        <LinearLayout
+
+            android:id="@+id/btnGianHang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:src="@drawable/baseline_shopping_bag_24">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity=""
+                android:text="Quản lý gian hàng"></TextView>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#807A7A"/>
+
+        <LinearLayout
+
+            android:id="@+id/btnDanhMuc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:src="@drawable/baseline_folder_open_24">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity=""
+                android:text="Danh mục"></TextView>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#807A7A"/>
+
+        <LinearLayout
+
+            android:id="@+id/btnKhachHang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:src="@drawable/baseline_people_outline_24">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity=""
+                android:text="Khách hàng"></TextView>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#807A7A"/>
 
     </LinearLayout>
 
-</LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
