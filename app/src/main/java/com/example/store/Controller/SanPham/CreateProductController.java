@@ -27,10 +27,14 @@ import com.example.store.DatabaseHandler;
 import com.example.store.MainActivity;
 import com.example.store.R;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.io.ByteArrayOutputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -76,7 +80,8 @@ public class CreateProductController extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (imageUri != null) {
-                    convertImageToBase64AndSave();
+//                    convertImageToBase64AndSave();
+                    createHashAndSaveImage();
                 } else {
                     addSanPham(null); // No image
                 }
@@ -135,13 +140,39 @@ public class CreateProductController extends AppCompatActivity {
     }
 
     // Convert image to Base64
-    private void convertImageToBase64AndSave() {
+//    private void convertImageToBase64AndSave() {
+//        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+//        byte[] byteArray = byteArrayOutputStream.toByteArray();
+//        String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
+//        addSanPham(base64Image); // Save product with image
+//    }
+    private void createHashAndSaveImage() {
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-        String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
-        addSanPham(base64Image); // Save product with image
+        byte[] imageData = byteArrayOutputStream.toByteArray();
+
+        // Tạo chuỗi băm từ ảnh
+        String imageHash = hashImage(imageData);
+
+        // Lưu ảnh lên Firebase hoặc hệ thống lưu trữ, đồng thời lưu imageHash vào SQLite
+        uploadImageToStorageAndSaveHash(imageData, imageHash);
+    }
+    private void uploadImageToStorageAndSaveHash(byte[] imageData, String imageHash) {
+        // Thay vì lưu chuỗi Base64, bạn lưu chuỗi băm và ảnh
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference imageRef = storageRef.child("images/" + imageHash + ".jpg");
+
+        // Tải ảnh lên
+        imageRef.putBytes(imageData).addOnSuccessListener(taskSnapshot -> {
+            Toast.makeText(this, "Ảnh được tải lên thành công!", Toast.LENGTH_SHORT).show();
+
+            addSanPham(imageHash);
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Lỗi tải ảnh: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
     }
 
     // Add product to SQLite
@@ -188,5 +219,23 @@ public class CreateProductController extends AppCompatActivity {
                 Toast.makeText(this, "Permission denied!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+
+    public String hashImage(byte[] imageData) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(imageData);
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString(); // Chuỗi băm đại diện cho ảnh
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

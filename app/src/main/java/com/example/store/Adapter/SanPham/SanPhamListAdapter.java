@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.example.store.Modal.Product;
 import com.example.store.R;
 import com.example.store.VMCrop;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -53,16 +55,24 @@ public class SanPhamListAdapter extends ArrayAdapter<Product> {
             textViewCaption.setText("Số lượng : "+ item.getSoLuong()+ " "+ item.getDonViTinh());
             textViewSl.setText("Giá bán: "+ VMCrop.setFormatMoney(Integer.parseInt(item.getGiaBan())));
             System.out.println("item img"+ item.getImgProduct());
-            if(item.getImgProduct().startsWith("https://")){
-                Picasso.get().load(item.getImgProduct()).into(imageView);
-            }else
-            // Chuyển đổi chuỗi Base64 thành bitmap
-            if (item.getImgProduct() != null && !item.getImgProduct().isEmpty()) {
-                Bitmap bitmap = decodeBase64(item.getImgProduct());
-                imageView.setImageBitmap(bitmap);
-            } else {
-                imageView.setImageResource(R.drawable.ic_launcher_background); // Ảnh mặc định khi không có URL
-            }
+//            if(item.getImgProduct().startsWith("https://")){
+//                Picasso.get().load(item.getImgProduct()).into(imageView);
+//            }else
+//            // Chuyển đổi chuỗi Base64 thành bitmap
+//            if (item.getImgProduct() != null && !item.getImgProduct().isEmpty()) {
+//                Bitmap bitmap = decodeBase64(item.getImgProduct());
+//                imageView.setImageBitmap(bitmap);
+//            } else {
+//                imageView.setImageResource(R.drawable.ic_launcher_background); // Ảnh mặc định khi không có URL
+//            }
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+            System.out.println("storageRef "+ storageRef);
+            StorageReference imageRef = storageRef.child("images/" + item.getImgProduct() + ".jpg");
+            imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                Picasso.get().load(uri).into(imageView);
+            }).addOnFailureListener(e -> {
+                System.out.println("Failed to load image URL");
+            });
         }
 
         return view;
