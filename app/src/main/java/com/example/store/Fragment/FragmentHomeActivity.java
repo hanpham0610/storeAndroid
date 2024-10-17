@@ -64,8 +64,6 @@ public class FragmentHomeActivity extends Fragment {
         db = new DatabaseHandler(requireActivity());
         db.copyDB2SDCard();
 
-        int sbg = db.GetCount("select * from qly_sanpham");
-         Toast.makeText( getActivity(), "số bản ghi:" + sbg, Toast.LENGTH_SHORT ).show();
         setBtnHoanDoi();
         db2ListViewSanPham();
         setCard();
@@ -183,8 +181,6 @@ public class FragmentHomeActivity extends Fragment {
 
     private void updateCartItemCount() {
         int sbg = db.GetCount("SELECT * FROM qly_card");
-//        Toast.makeText( this, "số bản ghi:" + sbg, Toast.LENGTH_SHORT ).show();
-        System.out.println("sbg " + sbg);
 
         if (sbg > 0) {
             cartItemCount.setVisibility(View.VISIBLE);
