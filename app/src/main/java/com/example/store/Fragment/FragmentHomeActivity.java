@@ -86,6 +86,8 @@ public class FragmentHomeActivity extends Fragment {
             }
         });
 
+
+
         return view;
     }
 

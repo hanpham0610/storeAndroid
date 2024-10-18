@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -54,11 +55,16 @@ public class CreateProductController extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_product_controller);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBarAddSanPham);
+        //Toolbar will now take on default Action Bar characteristics
+        setActionBar(toolbar);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
+        this.setTitle("Thêm sản phẩm");
         // Initialize SQLite Database handler
         db = new DatabaseHandler(this);
 
-        imageView = findViewById(R.id.imageView);
+        imageView = findViewById(R.id.addImgProduct);
         edtTenMatHang = findViewById(R.id.edtTenMatHang);
         edtMaVach = findViewById(R.id.edtMaVach);
         edtGiaBan = findViewById(R.id.edtGiaBan);

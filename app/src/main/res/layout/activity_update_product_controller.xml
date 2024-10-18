@@ -3,22 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <androidx.cardview.widget.CardView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_margin="5dp">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background" />
+        <ImageView
+            android:id="@+id/updateImgProduct"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true" />
+    </androidx.cardview.widget.CardView>
+<!--    <ImageButton-->
+<!--        android:id="@+id/updateImgProduct"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/radius" />-->
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnUpdate"
         android:layout_width="wrap_content"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:text="Chọn ảnh" />
 
     <EditText
-        android:id="@+id/edtTenMatHang"
+        android:id="@+id/edtUpdateTenMatHang"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Tên mặt hàng" />
@@ -30,14 +43,14 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/edtMaVach"
+            android:id="@+id/edtUpdateMaVach"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:hint="Mã vạch" />
 
         <ImageButton
-            android:id="@+id/btnQuetMaVach"
+            android:id="@+id/btnUpdateQuetMaVach"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/qr_scan"
@@ -45,31 +58,31 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/edtGiaBan"
+        android:id="@+id/edtUpdateGiaBan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Giá bán" />
 
     <EditText
-        android:id="@+id/edtSoLuong"
+        android:id="@+id/edtUpdateSoLuong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Số lượng" />
 
     <EditText
-        android:id="@+id/edtDonViTinh"
+        android:id="@+id/edtUpdateDonViTinh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Đơn vị tính" />
 
     <CheckBox
-        android:id="@+id/chkApDungThue"
+        android:id="@+id/chkUpdateApDungThue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Áp dụng thuế" />
 
     <Button
-        android:id="@+id/btnLuu"
+        android:id="@+id/btnUpdateLuu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lưu" />

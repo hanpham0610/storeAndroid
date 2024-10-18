@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -34,7 +35,13 @@ public class QuanLySanPhamController extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //back tren ActionBar
+
         setContentView(R.layout.activity_quan_ly_san_pham_controller);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+            getSupportActionBar().setDisplayShowHomeEnabled( true );
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBarQlySanPham);
         //Toolbar will now take on default Action Bar characteristics
         setActionBar(toolbar);
@@ -48,6 +55,16 @@ public class QuanLySanPhamController extends AppCompatActivity {
         db.copyDB2SDCard();
         db2ListViewSanPham();
         ChuyenTrang();
+        listView.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
+
+                Intent intent = new Intent( QuanLySanPhamController.this, UpdateProductController.class );
+                intent.putExtra( "idProduct", sanPhamList.get( i ).getProductId().toString() );
+                startActivity( intent );
+
+            }
+        } );
     }
 
     private void ChuyenTrang() {

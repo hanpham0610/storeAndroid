@@ -1,27 +1,53 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <Toolbar
+        android:id="@+id/toolBarAddSanPham"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background" />
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="#F1F1F1"
+        app:title="Quản lý"
+        app:titleTextColor="#000000" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_margin="5dp">
+
+        <ImageView
+            android:id="@+id/addImgProduct"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true" />
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="Chọn ảnh" />
 
-    <EditText
-        android:id="@+id/edtTenMatHang"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tên mặt hàng" />
+        android:background="@color/white"
+        android:hint="Tên mặt hàng">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtTenMatHang"
+            android:background="@color/white"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Barcode input with scan button -->
     <LinearLayout
@@ -29,38 +55,76 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/edtMaVach"
+<!--        <EditText-->
+<!--            android:id="@+id/edtMaVach"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="Mã vạch" />-->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:hint="Mã vạch" />
+            android:background="@color/white"
+            android:hint="Mã vạch">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtMaVach"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
         <ImageButton
             android:id="@+id/btnQuetMaVach"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:background="@color/white"
             android:src="@drawable/qr_scan"
-            android:text="Quét mã" />
+            android:scaleType="centerInside"
+            android:contentDescription="Quét mã" />
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/edtGiaBan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Giá bán" />
 
-    <EditText
-        android:id="@+id/edtSoLuong"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Số lượng" />
+        android:background="@color/white"
+        android:hint="Giá bán">
 
-    <EditText
-        android:id="@+id/edtDonViTinh"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtGiaBan"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Đơn vị tính" />
+        android:background="@color/white"
+        android:hint="Số lượng">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtSoLuong"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:hint="Đơn vị tính">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtDonViTinh"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <CheckBox
         android:id="@+id/chkApDungThue"
@@ -70,7 +134,7 @@
 
     <Button
         android:id="@+id/btnLuu"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Lưu" />
 </LinearLayout>
